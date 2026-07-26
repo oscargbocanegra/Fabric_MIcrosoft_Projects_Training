@@ -1,0 +1,44 @@
+table dim_operational_status
+	lineageTag: 2c243b5a-4568-4bfc-800a-6a79ee1055b5
+	sourceLineageTag: [dbo].[dim_operational_status]
+
+	column status
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e43f46a8-8f3c-4b02-b5c2-27a3d639045a
+		sourceLineageTag: status
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column responsible_department
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1b1c77c0-ef39-4241-8c58-96395c2d591a
+		sourceLineageTag: responsible_department
+		summarizeBy: none
+		sourceColumn: responsible_department
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 3f858854-ac77-4456-98ed-868a7e733643
+		sourceLineageTag: status_id
+		summarizeBy: none
+		sourceColumn: status_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_operational_status = entity
+		mode: directLake
+		source
+			entityName: dim_operational_status
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
