@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_process_smart_device"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "23f2d4a6-f897-8015-4538-2e1e15c78132"
+  }
+}

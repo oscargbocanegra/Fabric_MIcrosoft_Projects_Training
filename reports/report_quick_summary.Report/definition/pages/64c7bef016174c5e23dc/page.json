@@ -1,0 +1,216 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "64c7bef016174c5e23dc",
+  "displayName": "Page 1",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "autoPageGenerationConfig": {
+    "selectedFields": [
+      {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "dim_connectivity"
+            }
+          },
+          "Property": "luetooth"
+        }
+      },
+      {
+        "Aggregation": {
+          "Expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "fact_device"
+                }
+              },
+              "Property": "device_id"
+            }
+          },
+          "Function": 0
+        }
+      }
+    ],
+    "visualContainerConfigurations": [
+      {
+        "name": "68bfce9005403edbcc1c",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "dim_connectivity"
+                }
+              },
+              "Property": "luetooth"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_device"
+                    }
+                  },
+                  "Property": "device_id"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "60ca5748c5d04908ad02",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "dim_camera"
+                }
+              },
+              "Property": "video_recording"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_device"
+                    }
+                  },
+                  "Property": "device_id"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "a6eafd0a192225470233",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "dim_connectivity"
+                }
+              },
+              "Property": "sim_card_slot"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_device"
+                    }
+                  },
+                  "Property": "device_id"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "55242ccb0d4383760d00",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "dim_connectivity"
+                }
+              },
+              "Property": "usb_connector"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_device"
+                    }
+                  },
+                  "Property": "device_id"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "9db65c7465b0a3120e24",
+        "fields": []
+      },
+      {
+        "name": "5a3186fce53037d4e951",
+        "fields": []
+      },
+      {
+        "name": "b8f8b87c7ee748b06a92",
+        "fields": []
+      },
+      {
+        "name": "ca8673220c0c08a40e9d",
+        "fields": []
+      },
+      {
+        "name": "bc3c3853acd5361ed120",
+        "fields": []
+      },
+      {
+        "name": "bef4bd8207e5db004abb",
+        "fields": []
+      },
+      {
+        "name": "d2c6046606549e9b046d",
+        "fields": []
+      },
+      {
+        "name": "f4e219163c7c78de40e2",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_device"
+                    }
+                  },
+                  "Property": "device_id"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "ccc218b719505d5e2547",
+        "fields": []
+      }
+    ],
+    "layout": {
+      "related": {
+        "version": 1
+      }
+    }
+  }
+}

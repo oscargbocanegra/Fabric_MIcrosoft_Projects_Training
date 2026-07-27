@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "sm_smart_device_wh"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "39a27f76-98d2-81b1-4c01-aa6a552ee5bf"
+  }
+}

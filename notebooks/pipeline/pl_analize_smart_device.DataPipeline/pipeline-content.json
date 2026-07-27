@@ -1,0 +1,219 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@variables('v_full_load_array')",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "SqlServerStoredProcedure",
+              "typeProperties": {
+                "storedProcedureName": "[dbo].[sp_full_load]",
+                "storedProcedureParameters": {
+                  "lh_name": {
+                    "value": {
+                      "value": "@item().p_lh_name",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "schema": {
+                    "value": {
+                      "value": "@item().p_schema",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "table": {
+                    "value": {
+                      "value": "@item().p_table",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  }
+                }
+              },
+              "connectionSettings": {
+                "name": "wh_smart_device",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "2349ff59-e2cb-a19d-4d89-025c65ac3d78",
+                    "endpoint": "zwprn2lmphme3fscwmhhbqyigu-ubyici25fptujo7uchljcfeq6y.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "externalReferences": {
+                    "connection": "15f50fd3-154b-4339-883e-61f005738b63"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "SP_Full_Load",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach Full Load",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@variables('v_incremental_load_array')",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "SqlServerStoredProcedure",
+              "typeProperties": {
+                "storedProcedureName": "[dbo].[sp_incremental_load]",
+                "storedProcedureParameters": {
+                  "date": {
+                    "value": {
+                      "value": "@pipeline().parameters.p_date",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "lh_name": {
+                    "value": {
+                      "value": "@item().p_lh_name",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "schema": {
+                    "value": {
+                      "value": "@item().p_schema",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "table": {
+                    "value": {
+                      "value": "@item().p_table",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  }
+                }
+              },
+              "connectionSettings": {
+                "name": "wh_smart_device",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "2349ff59-e2cb-a19d-4d89-025c65ac3d78",
+                    "endpoint": "zwprn2lmphme3fscwmhhbqyigu-ubyici25fptujo7uchljcfeq6y.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "externalReferences": {
+                    "connection": "15f50fd3-154b-4339-883e-61f005738b63"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "SP Incremental Load",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach Incremental Load",
+        "dependsOn": [
+          {
+            "activity": "ForEach Full Load",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "p_date": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "v_full_load_array": {
+        "type": "Array",
+        "defaultValue": [
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_category"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_brand"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_camera"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_connectivity"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_operating_system"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_time"
+          }
+        ]
+      },
+      "v_incremental_load_array": {
+        "type": "Array",
+        "defaultValue": [
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "fact_device"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_model"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_display"
+          },
+          {
+            "p_lh_name": "lh_gold",
+            "p_schema": "dbo",
+            "p_table": "dim_physical_spects"
+          }
+        ]
+      }
+    }
+  }
+}

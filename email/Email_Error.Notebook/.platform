@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Email_Error"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e07bf923-cd19-af7e-44ba-cd9c57eea2e7"
+  }
+}

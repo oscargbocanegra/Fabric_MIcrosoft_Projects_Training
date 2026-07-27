@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "04.Ingestion_file_camera"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a21e9572-cd45-81bd-47b4-b5bf3964195b"
+  }
+}

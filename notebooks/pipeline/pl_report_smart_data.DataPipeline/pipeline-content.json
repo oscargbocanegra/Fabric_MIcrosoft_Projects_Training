@@ -1,0 +1,61 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "sm_refresh_report",
+        "type": "PBISemanticModelRefresh",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "method": "POST",
+          "operationType": "SemanticModelRefresh",
+          "groupId": "238170a0-2b5d-44e7-bbf4-11d6911490f6",
+          "datasetId": "552ee5bf-aa6a-4c01-81b1-98d239a27f76",
+          "objects": [
+            {
+              "table": "dim_display"
+            },
+            {
+              "table": "dim_model"
+            },
+            {
+              "table": "dim_physical_spects"
+            },
+            {
+              "table": "fact_device"
+            },
+            {
+              "table": "dim_time"
+            },
+            {
+              "table": "dim_brand"
+            },
+            {
+              "table": "dim_operating_system"
+            },
+            {
+              "table": "dim_connectivity"
+            },
+            {
+              "table": "dim_camera"
+            },
+            {
+              "table": "dim_category"
+            }
+          ],
+          "waitOnCompletion": true,
+          "commitMode": "Transactional"
+        },
+        "externalReferences": {
+          "connection": "4ecf1830-f337-4a08-a42b-e6bae13f0a00"
+        }
+      }
+    ]
+  }
+}

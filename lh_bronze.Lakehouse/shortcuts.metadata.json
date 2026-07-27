@@ -1,0 +1,14 @@
+[
+  {
+    "name": "smart-device",
+    "path": "/Files",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "1edca322-7a13-4f7e-96cc-b6d564fc9e61",
+        "location": "https://2026datalaketraining.dfs.core.windows.net",
+        "subpath": "/smart-device"
+      }
+    }
+  }
+]

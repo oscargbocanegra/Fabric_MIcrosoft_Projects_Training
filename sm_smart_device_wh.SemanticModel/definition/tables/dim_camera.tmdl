@@ -1,0 +1,85 @@
+table dim_camera
+	lineageTag: c72da5c5-33fe-41d4-b822-e97164b9965b
+	sourceLineageTag: [dbo].[dim_camera]
+
+	column camera_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 4fa0d27f-269d-4abc-8ed6-1ea28121c4f1
+		sourceLineageTag: camera_id
+		summarizeBy: none
+		sourceColumn: camera_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column camera_resolution
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: a34f96e6-23e5-4f77-a41b-e3493762bd2f
+		sourceLineageTag: camera_resolution
+		summarizeBy: none
+		sourceColumn: camera_resolution
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_pixel
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 06b756ca-b0b7-49d3-9ed0-e1d95fe0e7c3
+		sourceLineageTag: effective_pixel
+		summarizeBy: none
+		sourceColumn: effective_pixel
+
+		annotation SummarizationSetBy = Automatic
+
+	column image_format
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d28df57d-c30d-498a-916b-e974d50bc62f
+		sourceLineageTag: image_format
+		summarizeBy: none
+		sourceColumn: image_format
+
+		annotation SummarizationSetBy = Automatic
+
+	column video_recording
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b05bf820-ffc7-4f51-947a-25c907104282
+		sourceLineageTag: video_recording
+		summarizeBy: none
+		sourceColumn: video_recording
+
+		annotation SummarizationSetBy = Automatic
+
+	column flash
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e1d3ce2d-e9a7-4ca2-8d3a-d77aec6c3fb0
+		sourceLineageTag: flash
+		summarizeBy: none
+		sourceColumn: flash
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingestion_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: ba27a09d-0751-4621-9f9e-439f68d993e6
+		sourceLineageTag: ingestion_date
+		summarizeBy: none
+		sourceColumn: ingestion_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_camera = entity
+		mode: directLake
+		source
+			entityName: dim_camera
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

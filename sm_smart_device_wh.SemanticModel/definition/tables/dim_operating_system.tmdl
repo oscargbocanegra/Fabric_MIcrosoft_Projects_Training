@@ -1,0 +1,45 @@
+table dim_operating_system
+	lineageTag: a2e2b1e4-95bf-418c-bf7b-4177abd6e291
+	sourceLineageTag: [dbo].[dim_operating_system]
+
+	column os_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: fb6d0318-7ec7-4afb-a56c-649764dbb04c
+		sourceLineageTag: os_id
+		summarizeBy: none
+		sourceColumn: os_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Platform
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fce0861a-b529-4665-84c4-a9df3731240e
+		sourceLineageTag: Platform
+		summarizeBy: none
+		sourceColumn: Platform
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingestion_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 9b27c82e-6b36-4984-802d-c1e244660b1a
+		sourceLineageTag: ingestion_date
+		summarizeBy: none
+		sourceColumn: ingestion_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_operating_system = entity
+		mode: directLake
+		source
+			entityName: dim_operating_system
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,65 @@
+table dim_brand
+	lineageTag: d7ca2ab7-99c2-4cf6-904d-25bbfd9b14ea
+	sourceLineageTag: [dbo].[dim_brand]
+
+	column brand_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 5a7aa77d-4d9b-4da0-ab24-448de7e16199
+		sourceLineageTag: brand_id
+		summarizeBy: none
+		sourceColumn: brand_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 69b5eb55-3b05-48af-b923-b27b3de94b12
+		sourceLineageTag: brand
+		summarizeBy: none
+		sourceColumn: brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column hardware_designer
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f3c51fed-89f9-4498-933b-00c3ff0abc0e
+		sourceLineageTag: hardware_designer
+		summarizeBy: none
+		sourceColumn: hardware_designer
+
+		annotation SummarizationSetBy = Automatic
+
+	column manufacturer
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: a760f37d-5893-4eb2-b087-493d40c355fe
+		sourceLineageTag: manufacturer
+		summarizeBy: none
+		sourceColumn: manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingestion_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 7424ea92-5291-4b01-9762-27feeee41277
+		sourceLineageTag: ingestion_date
+		summarizeBy: none
+		sourceColumn: ingestion_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_brand = entity
+		mode: directLake
+		source
+			entityName: dim_brand
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

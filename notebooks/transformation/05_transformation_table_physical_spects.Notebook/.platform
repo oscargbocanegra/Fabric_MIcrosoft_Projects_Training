@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "05_transformation_table_physical_spects"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b90b3a70-80b9-99bc-47b2-17e684235b0c"
+  }
+}

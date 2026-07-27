@@ -1,0 +1,135 @@
+table dim_physical_spects
+	lineageTag: 564fd6be-03ab-4047-828f-cd825bdc6ccf
+	sourceLineageTag: [dbo].[dim_physical_spects]
+
+	column physicalSpec_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 3fd99f12-a956-44c1-8123-64e9c7339934
+		sourceLineageTag: physicalSpec_id
+		summarizeBy: none
+		sourceColumn: physicalSpec_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column width
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 727346e5-34ea-4ad3-848d-02eb344ac917
+		sourceLineageTag: width
+		summarizeBy: none
+		sourceColumn: width
+
+		annotation SummarizationSetBy = Automatic
+
+	column height
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 74a8c001-ff1f-4aeb-94be-7d90e38a2c52
+		sourceLineageTag: height
+		summarizeBy: none
+		sourceColumn: height
+
+		annotation SummarizationSetBy = Automatic
+
+	column depth
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5636cbb4-e6e4-4dc5-972a-15866180cb2e
+		sourceLineageTag: depth
+		summarizeBy: none
+		sourceColumn: depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column bounding_volume
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5887af39-8931-402c-a54a-e149c78072fb
+		sourceLineageTag: bounding_volume
+		summarizeBy: none
+		sourceColumn: bounding_volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column ram_capacity
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f655d39e-d5d6-40bb-ad38-eb7278492522
+		sourceLineageTag: ram_capacity
+		summarizeBy: none
+		sourceColumn: ram_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column non_volatile_memory_capacity
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ef4fe9b1-7d03-4067-96c2-0c7b477d3adc
+		sourceLineageTag: non_volatile_memory_capacity
+		summarizeBy: none
+		sourceColumn: non_volatile_memory_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column CellularController
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 90041c0a-59ac-460f-9199-b3ffb3bbf9ad
+		sourceLineageTag: CellularController
+		summarizeBy: none
+		sourceColumn: CellularController
+
+		annotation SummarizationSetBy = Automatic
+
+	column nominal_battery_capacity
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 933e8b2d-fe7e-4ddd-95eb-6a17018dcdba
+		sourceLineageTag: nominal_battery_capacity
+		summarizeBy: none
+		sourceColumn: nominal_battery_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column estimated_battery_life
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 899b75e3-c7b8-4000-90b9-fdffec16589b
+		sourceLineageTag: estimated_battery_life
+		summarizeBy: none
+		sourceColumn: estimated_battery_life
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingestion_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 22e00a27-9984-4f03-85fc-c7349ba042b2
+		sourceLineageTag: ingestion_date
+		summarizeBy: none
+		sourceColumn: ingestion_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column file_date
+		dataType: string
+		sourceProviderType: varchar(2048)
+		lineageTag: 155b0701-8a55-427c-b280-b8f7b61033d6
+		sourceLineageTag: file_date
+		summarizeBy: none
+		sourceColumn: file_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_physical_spects = entity
+		mode: directLake
+		source
+			entityName: dim_physical_spects
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

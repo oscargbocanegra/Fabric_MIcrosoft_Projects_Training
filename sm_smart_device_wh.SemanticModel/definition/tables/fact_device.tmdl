@@ -1,0 +1,133 @@
+table fact_device
+	lineageTag: d5330a3c-a2f5-4ff6-9f64-18a6c2e6ba97
+	sourceLineageTag: [dbo].[fact_device]
+
+	column device_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 5f5b9650-edba-4225-85ed-f9adcdc9831e
+		sourceLineageTag: device_id
+		summarizeBy: sum
+		sourceColumn: device_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e5c16dc9-bade-44a3-8a94-ed043b81d5b0
+		sourceLineageTag: brand_id
+		summarizeBy: none
+		sourceColumn: brand_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 40e75d32-9594-4e02-8952-4f7bafd87aac
+		sourceLineageTag: model_id
+		summarizeBy: none
+		sourceColumn: model_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 64fef348-1785-4104-9f74-cfbad4ef7212
+		sourceLineageTag: display_id
+		summarizeBy: none
+		sourceColumn: display_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column camera_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 99c728cf-6f0d-413f-be06-91d83e96fbaa
+		sourceLineageTag: camera_id
+		summarizeBy: none
+		sourceColumn: camera_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column connectivity_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a6193bcd-a395-45c2-999b-dd795977406f
+		sourceLineageTag: connectivity_id
+		summarizeBy: none
+		sourceColumn: connectivity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column os_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 014eac08-8863-44d7-a443-01a1a73380fa
+		sourceLineageTag: os_id
+		summarizeBy: none
+		sourceColumn: os_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PhysicalSpec_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 639e8c04-b83d-428f-ab12-9939e33c4a59
+		sourceLineageTag: PhysicalSpec_id
+		summarizeBy: none
+		sourceColumn: PhysicalSpec_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column released_announced
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: 0c49933e-8998-4bff-8bae-24ae9fdc2ab5
+		sourceLineageTag: released_announced
+		summarizeBy: none
+		sourceColumn: released_announced
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingestion_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 9bebd30c-8625-4a82-abb0-6f38aaebfaef
+		sourceLineageTag: ingestion_date
+		summarizeBy: none
+		sourceColumn: ingestion_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column file_date
+		dataType: string
+		sourceProviderType: varchar(2048)
+		lineageTag: 1e427668-d94d-4ae5-b4cc-dbf6f5102f83
+		sourceLineageTag: file_date
+		summarizeBy: none
+		sourceColumn: file_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_device = entity
+		mode: directLake
+		source
+			entityName: fact_device
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

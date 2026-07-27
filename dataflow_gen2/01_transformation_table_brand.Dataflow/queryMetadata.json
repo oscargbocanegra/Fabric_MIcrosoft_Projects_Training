@@ -1,0 +1,29 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "01_transformation_table_brand",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "brand": {
+      "queryId": "66d92d70-2934-497d-a92e-f9d683dd9486",
+      "queryName": "brand",
+      "loadEnabled": false
+    },
+    "brand_DataDestination": {
+      "queryId": "9e0b161e-dda5-43c1-a0a5-d39d3a3d5696",
+      "queryName": "brand_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"bb18f052-94d5-42b1-a671-81e717362d7a\",\"DatasourceId\":\"2e0c21a9-9163-4cb2-a2ca-84f08f3c579f\"}"
+    }
+  ]
+}

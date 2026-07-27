@@ -1,0 +1,85 @@
+table dim_connectivity
+	lineageTag: 8c0a7243-f00b-4378-ad86-2520bb5c2dec
+	sourceLineageTag: [dbo].[dim_connectivity]
+
+	column connectivity_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 08db355f-682a-4ac2-bb98-be6434337726
+		sourceLineageTag: connectivity_id
+		summarizeBy: none
+		sourceColumn: connectivity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column usb
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: a6fd6051-6de1-4fc7-a01d-f52cf42fd31b
+		sourceLineageTag: usb
+		summarizeBy: none
+		sourceColumn: usb
+
+		annotation SummarizationSetBy = Automatic
+
+	column usb_connector
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c07f9d96-b7bd-4805-b147-04dd104c2538
+		sourceLineageTag: usb_connector
+		summarizeBy: none
+		sourceColumn: usb_connector
+
+		annotation SummarizationSetBy = Automatic
+
+	column luetooth
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d7175e82-5a8a-4c76-81b0-3ad378b5fd47
+		sourceLineageTag: luetooth
+		summarizeBy: none
+		sourceColumn: luetooth
+
+		annotation SummarizationSetBy = Automatic
+
+	column fc
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8594f197-b211-4663-a4a3-a141dbf9fce1
+		sourceLineageTag: fc
+		summarizeBy: none
+		sourceColumn: fc
+
+		annotation SummarizationSetBy = Automatic
+
+	column sim_card_slot
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fb9ecb50-a07c-41bc-9ef6-9576c9aa1bef
+		sourceLineageTag: sim_card_slot
+		summarizeBy: none
+		sourceColumn: sim_card_slot
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingestion_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: f8e1c27f-6423-4045-9f32-71e3d77a1361
+		sourceLineageTag: ingestion_date
+		summarizeBy: none
+		sourceColumn: ingestion_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_connectivity = entity
+		mode: directLake
+		source
+			entityName: dim_connectivity
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

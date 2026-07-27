@@ -1,0 +1,87 @@
+table dim_time
+	lineageTag: 4e82622b-3b4d-48af-aadf-89599bc51cd3
+	sourceLineageTag: [dbo].[dim_time]
+
+	column date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: ccf42929-cbf5-44dc-894c-7acc473b319e
+		sourceLineageTag: date
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 29da4824-c9c0-452e-bc7e-bd448f4d9f14
+		sourceLineageTag: year
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 5dc107d2-9c05-48c1-bec9-fa2c2e55d09c
+		sourceLineageTag: month
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: d0956c3a-864c-4fb6-817d-96b45ca69e6a
+		sourceLineageTag: day
+		summarizeBy: none
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5e5c8f46-1a65-46cf-b487-ec1425fbe434
+		sourceLineageTag: month_name
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c65bdbde-f696-48bd-9f1f-1981015c3cc7
+		sourceLineageTag: day_name
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 132c3b94-17ab-4bcf-b1de-f7f840b613c8
+		sourceLineageTag: quarter
+		summarizeBy: none
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_time = entity
+		mode: directLake
+		source
+			entityName: dim_time
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,452 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "GetMetadata",
+        "typeProperties": {
+          "datasetSettings": {
+            "type": "Binary",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "folderPath": "smart-device/bronze-data",
+                "fileName": {
+                  "value": "@pipeline().parameters.file_date",
+                  "type": "Expression"
+                }
+              }
+            },
+            "connectionSettings": {
+              "name": "lh_bronze",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "70f5f1ab-a9c2-8c84-46bd-72d20e1c6eaf",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000",
+                  "rootFolder": "Files"
+                },
+                "externalReferences": {
+                  "connection": "2e0c21a9-9163-4cb2-a2ca-84f08f3c579f"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "fieldList": [
+            "exists"
+          ],
+          "storeSettings": {
+            "type": "AzureBlobStorageReadSettings",
+            "recursive": true,
+            "enablePartitionDiscovery": false
+          },
+          "formatSettings": {
+            "type": "BinaryReadSettings"
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Folder Details",
+        "dependsOn": []
+      },
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@activity('Get Folder Details').output.exists",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "0308c859-2c87-bf09-4a18-42cfe66750d5",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Device File",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "fa26a2b7-2f84-a9f9-4b90-9c4000a868ce",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Model File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Device File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "6e2aa9ca-4e2d-b6a5-409b-0e0df83789b5",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Category File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Model File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "a21e9572-cd45-81bd-47b4-b5bf3964195b",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Camera File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Category File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "967c1ad1-5aeb-b9ef-4d1f-760eb4695dc7",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Brand File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Camera File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "01af8218-b9fe-ae49-4fbb-5a040d10dc70",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Physical Spects File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Brand File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "cbc4e49f-42a8-a85e-491a-5c0992e95ec7",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Display File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Physical Spects File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "5cef5521-ad98-8aae-476e-258844b69287",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Conectivity File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Display File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "21ff0c4b-01a9-946d-456a-6ad022f09aa1",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_date": {
+                    "value": {
+                      "value": "@pipeline().parameters.file_date",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "environment": {
+                    "value": {
+                      "value": "@pipeline().parameters.environment",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Ingest Operation Systrm File",
+              "dependsOn": [
+                {
+                  "activity": "Ingest Conectivity File",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "e07bf923-cd19-af7e-44ba-cd9c57eea2e7",
+                "workspaceId": "00000000-0000-0000-0000-000000000000"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Email Error",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "If Folder Exist",
+        "dependsOn": [
+          {
+            "activity": "Get Folder Details",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "file_date": {
+        "type": "string",
+        "defaultValue": "2025-07-07"
+      },
+      "environment": {
+        "type": "string",
+        "defaultValue": "Development"
+      }
+    }
+  }
+}
