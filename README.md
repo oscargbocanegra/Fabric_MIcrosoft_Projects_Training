@@ -1,110 +1,110 @@
 # Smart Device Analytics
 
-> Solución de Microsoft Fabric para integrar, estandarizar y analizar el catálogo de dispositivos inteligentes y sus características técnicas.
+> A Microsoft Fabric solution to ingest, standardize, and analyze a smart-device catalog and its technical characteristics.
 
 [![Microsoft Fabric](https://img.shields.io/badge/Microsoft-Fabric-0078D4?logo=microsoft&logoColor=white)](https://learn.microsoft.com/fabric/)
-[![Architecture](https://img.shields.io/badge/Arquitectura-Medallion-5B2C6F)](#arquitectura)
-[![Status](https://img.shields.io/badge/Estado-En%20endurecimiento-F2C811)](#estado-y-riesgos-conocidos)
+[![Architecture](https://img.shields.io/badge/Architecture-Medallion-5B2C6F)](#architecture)
+[![Status](https://img.shields.io/badge/Status-Hardening-F2C811)](#status-and-known-risks)
 
-## Objetivo
+## Purpose
 
-El proyecto construye una cadena analítica para disponer información confiable y consultable de dispositivos inteligentes: dispositivo, modelo, categoría, marca, cámara, conectividad, sistema operativo, pantalla y especificaciones físicas. La solución aplica capas Bronze, Silver y Gold, culmina en un Warehouse, modelo semántico y reporte de resumen.
+The project creates a reliable and queryable analytical chain for smart-device information: device, model, category, brand, camera, connectivity, operating system, screen, and physical specifications. It applies Bronze, Silver, and Gold layers and finishes with a Warehouse, semantic model, and summary report.
 
-## Arquitectura
+## Architecture
 
 ```mermaid
 flowchart LR
-    A[Archivos fuente] --> B[Copy Job / notebooks de ingesta]
-    B --> C[Lakehouse Bronze]
-    C --> D[Notebooks y Dataflows Gen2]
-    D --> E[Lakehouse Silver]
-    E --> F[Transformaciones analíticas]
-    F --> G[Lakehouse Gold]
+    A[Source files] --> B[Copy Job / ingestion notebooks]
+    B --> C[Bronze Lakehouse]
+    C --> D[Notebooks and Dataflows Gen2]
+    D --> E[Silver Lakehouse]
+    E --> F[Analytical transformations]
+    F --> G[Gold Lakehouse]
     G --> H[Warehouse]
-    H --> I[Modelo semántico]
-    I --> J[Reporte Power BI]
-    B -.errores.-> K[Notificación]
+    H --> I[Semantic model]
+    I --> J[Power BI report]
+    B -. errors .-> K[Notification]
 ```
 
-## Inventario de artefactos
+## Artifact inventory
 
-| Capa / capacidad | Artefactos | Propósito |
+| Layer / capability | Artifacts | Purpose |
 |---|---:|---|
-| Ingesta | 9 notebooks, 1 Copy Job | Carga de entidades de dispositivos y atributos técnicos hacia Bronze. |
-| Transformación | 7 notebooks, 4 Dataflows Gen2 | Estandarización y preparación de entidades para consumo analítico. |
-| Utilidades y operación | 2 notebooks base, 1 notebook de notificación | Configuración, funciones compartidas y comunicación de errores. |
-| Orquestación | 5 Data Pipelines | Ingesta, transformación, proceso integral, análisis y actualización del reporte. |
-| Almacenamiento | 3 Lakehouses | Separación Bronze, Silver y Gold conforme al patrón Medallion. |
-| Consumo | 1 Warehouse, 1 modelo semántico, 1 reporte | Modelo de consulta y visualización ejecutiva. |
+| Ingestion | 9 notebooks, 1 Copy Job | Loads device entities and technical attributes into Bronze. |
+| Transformation | 7 notebooks, 4 Dataflows Gen2 | Standardizes and prepares entities for analytical consumption. |
+| Utilities and operations | 2 base notebooks, 1 notification notebook | Provides configuration, shared functions, and error communication. |
+| Orchestration | 5 Data Pipelines | Coordinates ingestion, transformation, full processing, analysis, and report refresh. |
+| Storage | 3 Lakehouses | Separates Bronze, Silver, and Gold data according to the Medallion pattern. |
+| Consumption | 1 Warehouse, 1 semantic model, 1 report | Supports querying and executive visualization. |
 
-## Flujo funcional
+## Processing flow
 
-1. `pl_ingest_smart_device` ejecuta la carga inicial de las entidades fuente.
-2. `pl_transformation_smart_device` ejecuta las transformaciones y los Dataflows Gen2.
-3. `pl_process_smart_device` compone el flujo de procesamiento.
-4. `pl_analize_smart_device` prepara la capa analítica y el Warehouse.
-5. `pl_report_smart_data` actualiza el modelo semántico y el reporte.
+1. `pl_ingest_smart_device` performs the initial load of source entities.
+2. `pl_transformation_smart_device` runs transformations and Dataflows Gen2.
+3. `pl_process_smart_device` composes the core processing workflow.
+4. `pl_analize_smart_device` prepares the analytical layer and Warehouse.
+5. `pl_report_smart_data` refreshes the semantic model and report.
 
-Los notebooks de las carpetas `includes`, `ingestion` y `transformation` deben conservar contratos de entrada/salida y ser invocados únicamente por los pipelines aprobados para cada etapa.
+Notebooks in the `includes`, `ingestion`, and `transformation` folders must preserve their input/output contracts and be invoked only through the approved pipelines for each stage.
 
-## Prerrequisitos
+## Prerequisites
 
-- Workspace de Microsoft Fabric con capacidad suficiente para Lakehouse, Warehouse, Data Pipelines, Dataflows Gen2 y Power BI.
-- Permisos para crear y ejecutar los artefactos incluidos en esta rama.
-- Fuentes de datos de dispositivos disponibles y autorizadas.
-- Mecanismo corporativo de gestión de secretos y alertas antes de habilitar notificaciones.
+- A Microsoft Fabric workspace with capacity for Lakehouse, Warehouse, Data Pipelines, Dataflows Gen2, and Power BI.
+- Permission to create and execute the artifacts in this branch.
+- Authorized smart-device source data.
+- An enterprise secret-management and alerting mechanism before enabling notifications.
 
-## Despliegue y configuración
+## Deployment and configuration
 
-1. Crea o selecciona un workspace de destino.
-2. Sincroniza los artefactos de esta rama mediante Git integration o impórtalos en el workspace.
-3. Asigna los Lakehouses Bronze, Silver y Gold, y valida sus conexiones.
-4. Parametriza rutas OneLake, conexiones y nombres de workspace para el ambiente de destino.
-5. Configura las fuentes de los notebooks y Dataflows con credenciales externas gestionadas.
-6. Ejecuta primero la ingesta, luego transformación, proceso, análisis y reporte; valida los resultados de cada capa antes de continuar.
+1. Create or select the target workspace.
+2. Synchronize this branch through Git integration or import its artifacts into the workspace.
+3. Assign the Bronze, Silver, and Gold Lakehouses and validate their connections.
+4. Parameterize OneLake paths, connections, workspace names, and Lakehouse names for the target environment.
+5. Configure notebook and Dataflow sources with managed external credentials.
+6. Run ingestion, transformation, process, analysis, and report stages in that order; validate the output of each layer before continuing.
 
-> No promuevas rutas, IDs de workspace, nombres de Lakehouse ni credenciales de un ambiente a otro mediante código embebido. Usa parámetros de despliegue, conexiones administradas y un almacén de secretos.
+> Do not promote embedded workspace IDs, Lakehouse names, OneLake paths, or credentials between environments. Use deployment parameters, managed connections, and a secret store.
 
-## Controles de calidad mínimos
+## Minimum data-quality controls
 
-| Dominio | Validaciones mínimas |
+| Domain | Minimum validation |
 |---|---|
-| Identidad | Claves de dispositivo, modelo y categoría no nulas y sin duplicados no justificados. |
-| Referencial | Marca, modelo, categoría y atributos técnicos con relaciones válidas. |
-| Completitud | Porcentaje de valores obligatorios por entidad y por carga. |
-| Conformidad | Tipos, unidades, dominios permitidos y formatos normalizados. |
-| Frescura | Fecha/hora de la última carga y volumen procesado por ejecución. |
+| Identity | Device, model, and category keys are non-null and free of unjustified duplicates. |
+| Referential integrity | Brand, model, category, and technical attributes have valid relationships. |
+| Completeness | Required-field completion percentage is measured by entity and load. |
+| Conformity | Types, units, accepted domains, and formats are normalized. |
+| Freshness | The latest load timestamp and processed volume are recorded for each run. |
 
-La evidencia de estas validaciones debe acompañar cada cambio relevante antes de declarar el proyecto como referencia reutilizable.
+Validation evidence must accompany material changes before the project is declared reusable as a reference.
 
-## Operación
+## Operations
 
-Ante un fallo, identifica el pipeline y actividad afectados, conserva el identificador de ejecución y revisa la capa previa antes de reintentar. No reejecutes cargas sin confirmar idempotencia, duplicados y el estado de las tablas destino. Las alertas deben enviar únicamente contexto operativo no sensible.
+For a failure, identify the affected pipeline and activity, retain the execution identifier, and inspect the preceding layer before retrying. Do not rerun loads without confirming idempotency, duplicate handling, and the target-table state. Alerts must carry operational context only and no sensitive data.
 
-## Estado y riesgos conocidos
+## Status and known risks
 
-El proyecto está funcional como laboratorio y se encuentra **en endurecimiento** antes de recomendarlo como patrón empresarial.
+The project is functional as a lab and is currently in **hardening** before it can be recommended as an enterprise reference.
 
-- Se deben externalizar los valores dependientes de entorno (workspace, Lakehouse, rutas OneLake y conexiones).
-- La notificación de errores debe usar un mecanismo seguro; no se permiten contraseñas ni secretos en notebooks, pipelines o archivos de configuración.
-- Se requiere formalizar contrato de datos, reglas DQ ejecutables, runbook, ADR y validación automática en CI.
-- La nomenclatura histórica se conserva para no romper referencias existentes; las correcciones deben planearse mediante una migración controlada.
+- Environment-dependent values (workspace, Lakehouse, OneLake paths, and connections) must be externalized.
+- Error notification must use a secure mechanism; passwords and secrets are prohibited in notebooks, pipelines, and versioned configuration files.
+- Data contracts, executable DQ rules, a runbook, ADRs, and automated CI validation still need to be formalized.
+- Historical naming is retained to avoid breaking existing references; corrections must be planned as a controlled migration.
 
-## Gobierno y contribución
+## Governance and contribution
 
-Los cambios entran por Pull Request hacia `project/SmartDeviceAnaliticsWS`. Toda modificación debe actualizar este README cuando afecte arquitectura, inventario, dependencias, seguridad, calidad u operación. Consulta el [catálogo y estándar transversal](../../blob/main/README.md) antes de contribuir.
+Changes are integrated through Pull Requests to `project/SmartDeviceAnaliticsWS`. Update this README whenever a change affects architecture, inventory, dependencies, security, data quality, or operations. Refer to the [governed catalog and common standards](../../blob/main/README.md) before contributing.
 
-## Estructura principal
+## Main structure
 
 ```text
-copy job/                 # Ingesta asistida por Copy Job
-dataflow_gen2/            # Transformaciones declarativas
-email/                    # Manejo de notificaciones; sin secretos embebidos
-lh_bronze.Lakehouse/      # Datos crudos
-lh_silver.Lakehouse/      # Datos estandarizados
-lh_gold.Lakehouse/        # Datos de consumo analítico
-notebooks/                # Utilidades, ingesta, transformación y pipelines
-sm_smart_device_wh.../    # Modelo semántico
+copy job/                 # Copy Job-assisted ingestion
+dataflow_gen2/            # Declarative transformations
+email/                    # Notifications; no embedded secrets
+lh_bronze.Lakehouse/      # Raw data
+lh_silver.Lakehouse/      # Standardized data
+lh_gold.Lakehouse/        # Analytical consumption data
+notebooks/                # Utilities, ingestion, transformation, and pipelines
+sm_smart_device_wh.../    # Semantic model
 wh_smart_device.../       # Warehouse
-reports/                  # Reporte de resumen
+reports/                  # Summary report
 ```
