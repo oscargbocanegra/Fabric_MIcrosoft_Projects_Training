@@ -31,7 +31,7 @@ flowchart LR
 | Layer / capability | Artifacts | Purpose |
 |---|---:|---|
 | Ingestion | 9 notebooks, 1 Copy Job | Loads device entities and technical attributes into Bronze. |
-| Transformation | 7 notebooks, 4 Dataflows Gen2 | Standardizes and prepares entities for analytical consumption. |
+| Transformation | 6 notebooks, 4 Dataflows Gen2 | Standardizes and prepares entities for analytical consumption. |
 | Utilities and operations | 2 base notebooks, 1 notification notebook | Provides configuration, shared functions, and error communication. |
 | Orchestration | 5 Data Pipelines | Coordinates ingestion, transformation, full processing, analysis, and report refresh. |
 | Storage | 3 Lakehouses | Separates Bronze, Silver, and Gold data according to the Medallion pattern. |
@@ -79,27 +79,31 @@ Validation evidence must accompany material changes before the project is declar
 
 The operational contract is versioned in [`docs/data-contract.md`](docs/data-contract.md), and the rule catalogue is in [`docs/dq-rules.md`](docs/dq-rules.md).
 
-## Operations
+## Business question and expected value
 
-For a failure, identify the affected pipeline and activity, retain the execution identifier, and inspect the preceding layer before retrying. Do not rerun loads without confirming idempotency, duplicate handling, and the target-table state. Alerts must carry operational context only and no sensitive data.
+The lab demonstrates how a device catalog can become a reusable analytical product rather than a collection of source files.
 
-Use the [deployment guide](docs/deployment-guide.md) for environment setup and the [operations runbook](docs/runbook.md) for execution, retry, recovery, escalation, RPO, and RTO targets. Material design choices are recorded in [`docs/adr/`](docs/adr/).
+| Business question | Analytical output | Value demonstrated |
+|---|---|---|
+| Which brands and categories dominate the catalog? | Brand/category dimensions and report visuals. | A consistent view for assortment and portfolio analysis. |
+| How do technical capabilities vary across devices? | Camera, connectivity, operating-system, display, and physical-spec dimensions. | Comparable device attributes for product analysis. |
+| Can the catalog be processed repeatedly without uncontrolled duplication? | `file_date` replay boundary, Warehouse procedures, and DQ rules. | A traceable and repeatable laboratory processing pattern. |
+| Can consumers reach the result through a governed model? | Gold layer, Warehouse, semantic model, and Power BI report. | An end-to-end path from ingestion to decision support. |
 
-## Status and known risks
+### Demonstration metrics
 
-The project is functional as a lab and is currently in **hardening** before it can be recommended as an enterprise reference.
+These are repository-observed structural metrics; runtime volumes and business KPIs must be captured from a Fabric execution and labelled separately.
 
-- Environment-dependent values (workspace, Lakehouse, OneLake paths, and connections) must be externalized.
-- Error notification must use a secure mechanism; passwords and secrets are prohibited in notebooks, pipelines, and versioned configuration files.
-- Data contracts, DQ rule identifiers, a runbook, deployment guidance, and initial ADRs are formalized under `docs/`; executable checks, evidence automation, environment parameterization, and CI validation remain hardening work.
-- Historical naming is retained to avoid breaking existing references; corrections must be planned as a controlled migration.
+| Metric | Observed value | Evidence |
+|---|---:|---|
+| Source entities | 9 | Ingestion notebooks and data contract. |
+| Notebooks | 18 | `notebooks/` plus the notification notebook. |
+| Data Pipelines | 5 | `notebooks/pipeline/`. |
+| Dataflows Gen2 | 4 | `dataflow_gen2/`. |
+| Lakehouses | 3 | Bronze, Silver, and Gold artifact folders. |
+| Report pages / visuals | 1 / 13 | `reports/report_quick_summary.Report/definition/`. |
 
-## Governance and contribution
-
-Changes are integrated through Pull Requests to `project/SmartDeviceAnaliticsWS`. Update this README whenever a change affects architecture, inventory, dependencies, security, data quality, or operations. Refer to the [governed catalog and common standards](../../blob/main/README.md) before contributing.
-
-=======
-The operational contract is versioned in [`docs/data-contract.md`](docs/data-contract.md), and the rule catalogue is in [`docs/dq-rules.md`](docs/dq-rules.md).
+See [`docs/value-demonstration.md`](docs/value-demonstration.md) for the evidence matrix, capture checklist, and lab acceptance criteria. The editable architecture diagram is [`docs/architecture.drawio`](docs/architecture.drawio).
 
 ## Operations
 
