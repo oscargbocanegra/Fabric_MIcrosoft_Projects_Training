@@ -25,10 +25,12 @@ This repository is the governed entry point for reusable Microsoft Fabric learni
 
 ## Project catalog
 
-| Project | Status | Scope | Branch |
-|---|---|---|---|
-| Wind Turbine Power Analysis | In progress | Daily ingestion, Medallion Lakehouse, semantic model, and wind-generation analytics. | [Open project](../../tree/project/wind_turbine_power_analysis) |
-| Smart Device Analytics | Hardening | Smart-device catalog ingestion, standardization, Warehouse, semantic model, and executive reporting. | [Open project](../../tree/project/SmartDeviceAnaliticsWS) |
+The catalog separates **functional state** from **portfolio maturity**. A project can be functionally complete as a lab while still being in hardening because portability, evidence, or operational acceptance is not yet complete.
+
+| Project | Maturity | Functional state | Value proof | Branch |
+|---|---|---|---|---|
+| Wind Turbine Power Analysis | Hardening | Completed lab flow from daily ingestion to Power BI reporting. | Dashboard and architecture evidence documented in the project README. | [Open project](https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training/tree/project/wind_turbine_power_analysis) |
+| Smart Device Analytics | Hardening | Functional lab flow from catalog ingestion to Warehouse and reporting. | Structural evidence and capture checklist in the project value-demonstration document. | [Open project](https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training/tree/project/SmartDeviceAnaliticsWS) |
 
 ### Maturity status
 
@@ -49,6 +51,19 @@ Before a project is labelled **Reference**, it must provide:
 - Architecture decisions (ADRs) for material design choices.
 - A repeatable validation process, including secret scanning and artifact/static checks where applicable.
 - Pull-request-based changes to the project branch, with the catalog updated when project scope or status changes.
+
+## Portfolio evidence standard
+
+Every project card must answer four questions before it can be presented as a reference:
+
+| Question | Minimum evidence |
+|---|---|
+| What problem does it solve? | Business question, target user, and decision enabled. |
+| What was built? | Architecture, Fabric artifact inventory, and processing sequence. |
+| Did it work? | Successful pipeline/report capture, reconciliation result, and DQ outcome. |
+| Can another person learn from it? | Prerequisites, reproducible steps, known limitations, and editable architecture diagram. |
+
+Runtime measurements must be labelled as **observed**, **sample**, or **pending**. Repository structure alone is not a substitute for execution evidence.
 
 ## Branch model
 
