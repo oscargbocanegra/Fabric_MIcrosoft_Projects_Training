@@ -1,116 +1,86 @@
 # Microsoft Fabric Projects Training
 
-> Laboratorios prácticos de ingeniería de datos, analítica, gobierno e inteligencia artificial aplicada sobre Microsoft Fabric.
+> Catálogo vivo y gobernado de laboratorios y patrones reutilizables de ingeniería de datos, analítica, gobierno e inteligencia artificial en Microsoft Fabric.
 
 [![Microsoft Fabric](https://img.shields.io/badge/Microsoft-Fabric-0078D4?logo=microsoft&logoColor=white)](https://learn.microsoft.com/fabric/)
-[![Architecture](https://img.shields.io/badge/Arquitectura-Lakehouse%20Medallion-5B2C6F)](#principios-de-trabajo)
-[![Status](https://img.shields.io/badge/Estado-En%20construcci%C3%B3n-F2C811)](#proyectos)
+[![Architecture](https://img.shields.io/badge/Arquitectura-Lakehouse%20Medallion-5B2C6F)](#estándar-de-gobierno)
+[![Catalog](https://img.shields.io/badge/Catálogo-Vivo%20y%20gobernado-107C10)](#catálogo-de-proyectos)
 
 ## Propósito
 
-Este repositorio reúne proyectos de entrenamiento y referencia para diseñar soluciones de datos modernas, reproducibles y orientadas a valor de negocio. Cada proyecto permite practicar un ciclo completo: desde la ingesta y transformación de datos hasta el modelo semántico, la visualización, los controles de calidad y, progresivamente, casos de uso de IA generativa.
+`main` es la fuente de referencia del portafolio: registra qué proyectos existen, su nivel de madurez, responsables técnicos y controles mínimos. Los artefactos ejecutables viven aislados en las ramas `project/*`; ningún proyecto se considera publicable si su ficha de catálogo y su README específico no están actualizados.
 
-El enfoque combina experiencia práctica en **Data Engineering**, arquitectura **Lakehouse**, gobierno de datos, automatización y analítica avanzada en el ecosistema Microsoft.
+## Catálogo de proyectos
 
-## Objetivos de aprendizaje
+| Proyecto | Rama | Estado | Dominio / resultado | Madurez | Acceso |
+|---|---|---|---|---|---|
+| Wind Turbine Power Analysis | `project/wind_turbine_power_analysis` | Completado | Analítica de generación eólica con Lakehouse Medallion y Power BI. | Laboratorio validado | [Abrir proyecto](../../tree/project/wind_turbine_power_analysis) |
+| Smart Device Analytics | `project/SmartDeviceAnaliticsWS` | En endurecimiento | Analítica de catálogo y características de dispositivos inteligentes, con orquestación, Warehouse y reporte. | Referencia técnica | [Abrir proyecto](../../tree/project/SmartDeviceAnaliticsWS) |
 
-- Construir soluciones end-to-end con Microsoft Fabric y OneLake.
-- Aplicar arquitectura Medallion: Bronze, Silver y Gold.
-- Diseñar pipelines de ingesta y transformación con trazabilidad.
-- Implementar modelos dimensionales y capas semánticas para Power BI.
-- Incorporar controles de calidad, documentación y criterios de operación.
-- Explorar automatización e IA aplicada a procesos y conocimiento de negocio.
+### Lectura de estados
 
-## Principios de trabajo
-
-| Principio | Aplicación en los proyectos |
+| Estado | Significado |
 |---|---|
-| Reproducibilidad | Los artefactos de Fabric se almacenan como código y configuración versionable. |
-| Arquitectura por capas | Separación clara entre datos crudos, datos estandarizados y datos de consumo. |
-| Calidad y trazabilidad | Validaciones, contratos y evidencia operativa como parte del proceso de datos. |
-| Gobierno desde el diseño | Naming, documentación, modelo semántico y seguridad considerados desde el inicio. |
-| Valor de negocio | Cada laboratorio debe responder una pregunta analítica u operativa concreta. |
-| Evolución pragmática | Se comienza con una solución funcional y se incrementa su madurez de forma controlada. |
+| Diseño | Alcance y arquitectura definidos; no listo para uso. |
+| En construcción | Artefactos en desarrollo; no hay evidencia completa de ejecución. |
+| En validación | Flujo desplegado y bajo pruebas funcionales, de calidad y operación. |
+| Completado | Laboratorio reproducible con documentación y evidencia mínima. |
+| En endurecimiento | Funcional, pero requiere cerrar controles de seguridad, portabilidad o gobierno antes de usarse como referencia empresarial. |
 
-## Proyectos
+## Estándar de gobierno
 
-Cada proyecto vive en una rama independiente. `main` funciona como el punto de entrada, catálogo y guía de navegación del repositorio.
+Cada proyecto debe cumplir estos controles para figurar en el catálogo como una referencia reutilizable:
 
-| Proyecto | Estado | Enfoque | Acceso |
-|---|---|---|---|
-| Wind Turbine Power Analysis | En progreso | Ingesta diaria, Lakehouse Medallion, modelo semántico y análisis de generación eólica. | [Abrir proyecto](../../tree/project/wind_turbine_power_analysis) |
+| Control | Mínimo exigible |
+|---|---|
+| Documentación | README con objetivo, arquitectura, inventario, prerrequisitos, despliegue y operación. |
+| Seguridad | Sin secretos, tokens, contraseñas, rutas privadas ni identificadores de entorno en el repositorio. Las credenciales se gestionan externamente. |
+| Portabilidad | Parámetros de workspace, Lakehouse, origen y destino separados de la lógica. |
+| Calidad | Contrato de datos y reglas de calidad trazables para entidades críticas. |
+| Operación | Orquestación identificada, manejo de errores, alertamiento y procedimiento de recuperación. |
+| Trazabilidad | Decisiones relevantes, cambios de esquema y evidencia de validación versionados junto al proyecto. |
+| Revisión | Cambios por Pull Request hacia `project/*`; actualizaciones del catálogo mediante Pull Request hacia `main`. |
 
-## Proyecto destacado: Wind Turbine Power Analysis
-
-Laboratorio de analítica energética que implementa un flujo de datos para analizar la potencia generada por turbinas eólicas y habilitar su consumo en Power BI.
-
-**Capacidades implementadas**
-
-- Ingesta diaria mediante notebook Python.
-- Transformaciones Bronze → Silver y Silver → Gold.
-- Lakehouses dedicados para las capas Bronze, Silver y Gold.
-- Pipeline de orquestación.
-- Modelo semántico con tablas de hechos y dimensiones de fecha, hora, turbina y estado operacional.
-- Reporte Power BI para análisis de potencia e indicadores operativos.
-- Alternativas de transformación con SQL y Dataflow para fines comparativos de aprendizaje.
-
-**Arquitectura funcional**
+## Ciclo de vida
 
 ```mermaid
 flowchart LR
-    A[Datos diarios] --> B[Notebook de ingesta]
-    B --> C[Lakehouse Bronze]
-    C --> D[Transformación Silver]
-    D --> E[Lakehouse Silver]
-    E --> F[Transformación Gold]
-    F --> G[Lakehouse Gold]
-    G --> H[Modelo semántico]
-    H --> I[Reporte Power BI]
+    A[Diseño] --> B[Construcción]
+    B --> C[Validación]
+    C --> D[Completado]
+    D --> E[Referencia reutilizable]
+    C --> F[Endurecimiento]
+    F --> E
 ```
 
-Accede a todos los notebooks, Lakehouses, pipeline, modelo semántico y reporte en la rama [project/wind_turbine_power_analysis](../../tree/project/wind_turbine_power_analysis).
+Una actualización de un proyecto debe conservar su rama autocontenida y actualizar esta ficha cuando cambien el estado, alcance, riesgos, arquitectura o criterios de operación.
 
 ## Convención de ramas
 
 ```text
-main                              # Índice, estándares y documentación común
-project/<nombre-del-proyecto>     # Proyecto autocontenido
-feature/<proyecto>-<capacidad>    # Evolución puntual de un proyecto
+main                              # Catálogo, estándares y documentación transversal
+project/<nombre-del-proyecto>     # Artefactos y documentación autocontenidos
+feature/<proyecto>-<capacidad>    # Evolución puntual
 fix/<proyecto>-<incidencia>       # Corrección puntual
 ```
 
-Los cambios de una capacidad se integran mediante Pull Request a su rama `project/...`. Los proyectos permanecen aislados de `main`, salvo que se actualice la documentación transversal o el índice.
+## Cómo usar el repositorio
 
-## Cómo usar este repositorio
+1. Selecciona un proyecto en el catálogo y revisa su README específico.
+2. Clona la rama del proyecto que vayas a ejecutar.
+3. Configura los parámetros de tu entorno de Fabric sin incorporar secretos al código.
+4. Despliega, ejecuta las validaciones y documenta cualquier desviación o decisión.
+5. Propón mejoras mediante Pull Request a la rama correspondiente.
 
-1. Consulta este `README` para identificar el laboratorio de interés.
-2. Abre la rama del proyecto desde la tabla anterior.
-3. Clona la rama específica para trabajar localmente:
-
-   ```bash
-   git clone --branch project/wind_turbine_power_analysis \
-     https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training.git
-   ```
-
-4. Sincroniza o despliega los artefactos en un workspace de Microsoft Fabric de laboratorio.
-5. Documenta hallazgos, decisiones y validaciones junto al proyecto correspondiente.
-
-## Roadmap
-
-- [x] Definir el repositorio índice y el modelo de ramas independientes.
-- [x] Publicar el laboratorio de análisis de potencia eólica.
-- [ ] Estandarizar plantillas de documentación, calidad de datos y operación.
-- [ ] Incorporar nuevos laboratorios de ingeniería de datos, gobierno, analítica e IA aplicada.
-- [ ] Consolidar guías reutilizables para arquitectura Lakehouse y Data Hub.
+```bash
+git clone --branch project/SmartDeviceAnaliticsWS \
+  https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training.git
+```
 
 ## Tecnologías
 
-Microsoft Fabric · OneLake · Lakehouse · Notebooks Python · SQL · Data Pipelines · Dataflows · Power BI · Modelos semánticos · Arquitectura Medallion · Data Quality · Automatización · IA Generativa
+Microsoft Fabric · OneLake · Lakehouse · Warehouse · Notebooks Python · SQL · Data Pipelines · Dataflows Gen2 · Power BI · Modelos semánticos · Arquitectura Medallion · Data Quality · Automatización · IA Generativa
 
 ## Alcance
 
-Este es un repositorio de aprendizaje y experimentación técnica. Los proyectos privilegian el entendimiento de patrones reutilizables, buenas prácticas de ingeniería y evidencia verificable antes de su adopción en entornos empresariales.
-
----
-
-Si este repositorio te resulta útil, puedes marcarlo con una estrella para seguir su evolución.
+Repositorio de aprendizaje y referencia técnica. La adopción productiva requiere completar los controles de seguridad, gobierno, observabilidad y despliegue propios de cada organización.
