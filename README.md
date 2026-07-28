@@ -1,116 +1,110 @@
-# Microsoft Fabric Projects Training
+# Smart Device Analytics
 
-> Laboratorios prácticos de ingeniería de datos, analítica, gobierno e inteligencia artificial aplicada sobre Microsoft Fabric.
+> Solución de Microsoft Fabric para integrar, estandarizar y analizar el catálogo de dispositivos inteligentes y sus características técnicas.
 
 [![Microsoft Fabric](https://img.shields.io/badge/Microsoft-Fabric-0078D4?logo=microsoft&logoColor=white)](https://learn.microsoft.com/fabric/)
-[![Architecture](https://img.shields.io/badge/Arquitectura-Lakehouse%20Medallion-5B2C6F)](#principios-de-trabajo)
-[![Status](https://img.shields.io/badge/Estado-En%20construcci%C3%B3n-F2C811)](#proyectos)
+[![Architecture](https://img.shields.io/badge/Arquitectura-Medallion-5B2C6F)](#arquitectura)
+[![Status](https://img.shields.io/badge/Estado-En%20endurecimiento-F2C811)](#estado-y-riesgos-conocidos)
 
-## Propósito
+## Objetivo
 
-Este repositorio reúne proyectos de entrenamiento y referencia para diseñar soluciones de datos modernas, reproducibles y orientadas a valor de negocio. Cada proyecto permite practicar un ciclo completo: desde la ingesta y transformación de datos hasta el modelo semántico, la visualización, los controles de calidad y, progresivamente, casos de uso de IA generativa.
+El proyecto construye una cadena analítica para disponer información confiable y consultable de dispositivos inteligentes: dispositivo, modelo, categoría, marca, cámara, conectividad, sistema operativo, pantalla y especificaciones físicas. La solución aplica capas Bronze, Silver y Gold, culmina en un Warehouse, modelo semántico y reporte de resumen.
 
-El enfoque combina experiencia práctica en **Data Engineering**, arquitectura **Lakehouse**, gobierno de datos, automatización y analítica avanzada en el ecosistema Microsoft.
-
-## Objetivos de aprendizaje
-
-- Construir soluciones end-to-end con Microsoft Fabric y OneLake.
-- Aplicar arquitectura Medallion: Bronze, Silver y Gold.
-- Diseñar pipelines de ingesta y transformación con trazabilidad.
-- Implementar modelos dimensionales y capas semánticas para Power BI.
-- Incorporar controles de calidad, documentación y criterios de operación.
-- Explorar automatización e IA aplicada a procesos y conocimiento de negocio.
-
-## Principios de trabajo
-
-| Principio | Aplicación en los proyectos |
-|---|---|
-| Reproducibilidad | Los artefactos de Fabric se almacenan como código y configuración versionable. |
-| Arquitectura por capas | Separación clara entre datos crudos, datos estandarizados y datos de consumo. |
-| Calidad y trazabilidad | Validaciones, contratos y evidencia operativa como parte del proceso de datos. |
-| Gobierno desde el diseño | Naming, documentación, modelo semántico y seguridad considerados desde el inicio. |
-| Valor de negocio | Cada laboratorio debe responder una pregunta analítica u operativa concreta. |
-| Evolución pragmática | Se comienza con una solución funcional y se incrementa su madurez de forma controlada. |
-
-## Proyectos
-
-Cada proyecto vive en una rama independiente. `main` funciona como el punto de entrada, catálogo y guía de navegación del repositorio.
-
-| Proyecto | Estado | Enfoque | Acceso |
-|---|---|---|---|
-| Wind Turbine Power Analysis | En progreso | Ingesta diaria, Lakehouse Medallion, modelo semántico y análisis de generación eólica. | [Abrir proyecto](../../tree/project/wind_turbine_power_analysis) |
-
-## Proyecto destacado: Wind Turbine Power Analysis
-
-Laboratorio de analítica energética que implementa un flujo de datos para analizar la potencia generada por turbinas eólicas y habilitar su consumo en Power BI.
-
-**Capacidades implementadas**
-
-- Ingesta diaria mediante notebook Python.
-- Transformaciones Bronze → Silver y Silver → Gold.
-- Lakehouses dedicados para las capas Bronze, Silver y Gold.
-- Pipeline de orquestación.
-- Modelo semántico con tablas de hechos y dimensiones de fecha, hora, turbina y estado operacional.
-- Reporte Power BI para análisis de potencia e indicadores operativos.
-- Alternativas de transformación con SQL y Dataflow para fines comparativos de aprendizaje.
-
-**Arquitectura funcional**
+## Arquitectura
 
 ```mermaid
 flowchart LR
-    A[Datos diarios] --> B[Notebook de ingesta]
+    A[Archivos fuente] --> B[Copy Job / notebooks de ingesta]
     B --> C[Lakehouse Bronze]
-    C --> D[Transformación Silver]
+    C --> D[Notebooks y Dataflows Gen2]
     D --> E[Lakehouse Silver]
-    E --> F[Transformación Gold]
+    E --> F[Transformaciones analíticas]
     F --> G[Lakehouse Gold]
-    G --> H[Modelo semántico]
-    H --> I[Reporte Power BI]
+    G --> H[Warehouse]
+    H --> I[Modelo semántico]
+    I --> J[Reporte Power BI]
+    B -.errores.-> K[Notificación]
 ```
 
-Accede a todos los notebooks, Lakehouses, pipeline, modelo semántico y reporte en la rama [project/wind_turbine_power_analysis](../../tree/project/wind_turbine_power_analysis).
+## Inventario de artefactos
 
-## Convención de ramas
+| Capa / capacidad | Artefactos | Propósito |
+|---|---:|---|
+| Ingesta | 9 notebooks, 1 Copy Job | Carga de entidades de dispositivos y atributos técnicos hacia Bronze. |
+| Transformación | 7 notebooks, 4 Dataflows Gen2 | Estandarización y preparación de entidades para consumo analítico. |
+| Utilidades y operación | 2 notebooks base, 1 notebook de notificación | Configuración, funciones compartidas y comunicación de errores. |
+| Orquestación | 5 Data Pipelines | Ingesta, transformación, proceso integral, análisis y actualización del reporte. |
+| Almacenamiento | 3 Lakehouses | Separación Bronze, Silver y Gold conforme al patrón Medallion. |
+| Consumo | 1 Warehouse, 1 modelo semántico, 1 reporte | Modelo de consulta y visualización ejecutiva. |
+
+## Flujo funcional
+
+1. `pl_ingest_smart_device` ejecuta la carga inicial de las entidades fuente.
+2. `pl_transformation_smart_device` ejecuta las transformaciones y los Dataflows Gen2.
+3. `pl_process_smart_device` compone el flujo de procesamiento.
+4. `pl_analize_smart_device` prepara la capa analítica y el Warehouse.
+5. `pl_report_smart_data` actualiza el modelo semántico y el reporte.
+
+Los notebooks de las carpetas `includes`, `ingestion` y `transformation` deben conservar contratos de entrada/salida y ser invocados únicamente por los pipelines aprobados para cada etapa.
+
+## Prerrequisitos
+
+- Workspace de Microsoft Fabric con capacidad suficiente para Lakehouse, Warehouse, Data Pipelines, Dataflows Gen2 y Power BI.
+- Permisos para crear y ejecutar los artefactos incluidos en esta rama.
+- Fuentes de datos de dispositivos disponibles y autorizadas.
+- Mecanismo corporativo de gestión de secretos y alertas antes de habilitar notificaciones.
+
+## Despliegue y configuración
+
+1. Crea o selecciona un workspace de destino.
+2. Sincroniza los artefactos de esta rama mediante Git integration o impórtalos en el workspace.
+3. Asigna los Lakehouses Bronze, Silver y Gold, y valida sus conexiones.
+4. Parametriza rutas OneLake, conexiones y nombres de workspace para el ambiente de destino.
+5. Configura las fuentes de los notebooks y Dataflows con credenciales externas gestionadas.
+6. Ejecuta primero la ingesta, luego transformación, proceso, análisis y reporte; valida los resultados de cada capa antes de continuar.
+
+> No promuevas rutas, IDs de workspace, nombres de Lakehouse ni credenciales de un ambiente a otro mediante código embebido. Usa parámetros de despliegue, conexiones administradas y un almacén de secretos.
+
+## Controles de calidad mínimos
+
+| Dominio | Validaciones mínimas |
+|---|---|
+| Identidad | Claves de dispositivo, modelo y categoría no nulas y sin duplicados no justificados. |
+| Referencial | Marca, modelo, categoría y atributos técnicos con relaciones válidas. |
+| Completitud | Porcentaje de valores obligatorios por entidad y por carga. |
+| Conformidad | Tipos, unidades, dominios permitidos y formatos normalizados. |
+| Frescura | Fecha/hora de la última carga y volumen procesado por ejecución. |
+
+La evidencia de estas validaciones debe acompañar cada cambio relevante antes de declarar el proyecto como referencia reutilizable.
+
+## Operación
+
+Ante un fallo, identifica el pipeline y actividad afectados, conserva el identificador de ejecución y revisa la capa previa antes de reintentar. No reejecutes cargas sin confirmar idempotencia, duplicados y el estado de las tablas destino. Las alertas deben enviar únicamente contexto operativo no sensible.
+
+## Estado y riesgos conocidos
+
+El proyecto está funcional como laboratorio y se encuentra **en endurecimiento** antes de recomendarlo como patrón empresarial.
+
+- Se deben externalizar los valores dependientes de entorno (workspace, Lakehouse, rutas OneLake y conexiones).
+- La notificación de errores debe usar un mecanismo seguro; no se permiten contraseñas ni secretos en notebooks, pipelines o archivos de configuración.
+- Se requiere formalizar contrato de datos, reglas DQ ejecutables, runbook, ADR y validación automática en CI.
+- La nomenclatura histórica se conserva para no romper referencias existentes; las correcciones deben planearse mediante una migración controlada.
+
+## Gobierno y contribución
+
+Los cambios entran por Pull Request hacia `project/SmartDeviceAnaliticsWS`. Toda modificación debe actualizar este README cuando afecte arquitectura, inventario, dependencias, seguridad, calidad u operación. Consulta el [catálogo y estándar transversal](../../blob/main/README.md) antes de contribuir.
+
+## Estructura principal
 
 ```text
-main                              # Índice, estándares y documentación común
-project/<nombre-del-proyecto>     # Proyecto autocontenido
-feature/<proyecto>-<capacidad>    # Evolución puntual de un proyecto
-fix/<proyecto>-<incidencia>       # Corrección puntual
+copy job/                 # Ingesta asistida por Copy Job
+dataflow_gen2/            # Transformaciones declarativas
+email/                    # Manejo de notificaciones; sin secretos embebidos
+lh_bronze.Lakehouse/      # Datos crudos
+lh_silver.Lakehouse/      # Datos estandarizados
+lh_gold.Lakehouse/        # Datos de consumo analítico
+notebooks/                # Utilidades, ingesta, transformación y pipelines
+sm_smart_device_wh.../    # Modelo semántico
+wh_smart_device.../       # Warehouse
+reports/                  # Reporte de resumen
 ```
-
-Los cambios de una capacidad se integran mediante Pull Request a su rama `project/...`. Los proyectos permanecen aislados de `main`, salvo que se actualice la documentación transversal o el índice.
-
-## Cómo usar este repositorio
-
-1. Consulta este `README` para identificar el laboratorio de interés.
-2. Abre la rama del proyecto desde la tabla anterior.
-3. Clona la rama específica para trabajar localmente:
-
-   ```bash
-   git clone --branch project/wind_turbine_power_analysis \
-     https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training.git
-   ```
-
-4. Sincroniza o despliega los artefactos en un workspace de Microsoft Fabric de laboratorio.
-5. Documenta hallazgos, decisiones y validaciones junto al proyecto correspondiente.
-
-## Roadmap
-
-- [x] Definir el repositorio índice y el modelo de ramas independientes.
-- [x] Publicar el laboratorio de análisis de potencia eólica.
-- [ ] Estandarizar plantillas de documentación, calidad de datos y operación.
-- [ ] Incorporar nuevos laboratorios de ingeniería de datos, gobierno, analítica e IA aplicada.
-- [ ] Consolidar guías reutilizables para arquitectura Lakehouse y Data Hub.
-
-## Tecnologías
-
-Microsoft Fabric · OneLake · Lakehouse · Notebooks Python · SQL · Data Pipelines · Dataflows · Power BI · Modelos semánticos · Arquitectura Medallion · Data Quality · Automatización · IA Generativa
-
-## Alcance
-
-Este es un repositorio de aprendizaje y experimentación técnica. Los proyectos privilegian el entendimiento de patrones reutilizables, buenas prácticas de ingeniería y evidencia verificable antes de su adopción en entornos empresariales.
-
----
-
-Si este repositorio te resulta útil, puedes marcarlo con una estrella para seguir su evolución.
