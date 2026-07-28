@@ -1,86 +1,84 @@
 # Microsoft Fabric Projects Training
 
-> Catálogo vivo y gobernado de laboratorios y patrones reutilizables de ingeniería de datos, analítica, gobierno e inteligencia artificial en Microsoft Fabric.
+> A governed, living catalog of hands-on Microsoft Fabric projects for data engineering, analytics, data governance, and applied AI.
 
 [![Microsoft Fabric](https://img.shields.io/badge/Microsoft-Fabric-0078D4?logo=microsoft&logoColor=white)](https://learn.microsoft.com/fabric/)
-[![Architecture](https://img.shields.io/badge/Arquitectura-Lakehouse%20Medallion-5B2C6F)](#estándar-de-gobierno)
-[![Catalog](https://img.shields.io/badge/Catálogo-Vivo%20y%20gobernado-107C10)](#catálogo-de-proyectos)
+[![Architecture](https://img.shields.io/badge/Architecture-Lakehouse%20Medallion-5B2C6F)](#working-principles)
+[![Catalog](https://img.shields.io/badge/Catalog-Governed-107C10)](#project-catalog)
 
-## Propósito
+## Purpose
 
-`main` es la fuente de referencia del portafolio: registra qué proyectos existen, su nivel de madurez, responsables técnicos y controles mínimos. Los artefactos ejecutables viven aislados en las ramas `project/*`; ningún proyecto se considera publicable si su ficha de catálogo y su README específico no están actualizados.
+This repository is the governed entry point for reusable Microsoft Fabric learning and reference projects. Each project develops an end-to-end capability: data ingestion, transformation, quality controls, semantic modeling, visualization, and operational documentation.
 
-## Catálogo de proyectos
+`main` is the portfolio catalog and common governance baseline. Project implementation lives in its own `project/<project-name>` branch.
 
-| Proyecto | Rama | Estado | Dominio / resultado | Madurez | Acceso |
-|---|---|---|---|---|---|
-| Wind Turbine Power Analysis | `project/wind_turbine_power_analysis` | Completado | Analítica de generación eólica con Lakehouse Medallion y Power BI. | Laboratorio validado | [Abrir proyecto](../../tree/project/wind_turbine_power_analysis) |
-| Smart Device Analytics | `project/SmartDeviceAnaliticsWS` | En endurecimiento | Analítica de catálogo y características de dispositivos inteligentes, con orquestación, Warehouse y reporte. | Referencia técnica | [Abrir proyecto](../../tree/project/SmartDeviceAnaliticsWS) |
+## Working principles
 
-### Lectura de estados
-
-| Estado | Significado |
+| Principle | Application |
 |---|---|
-| Diseño | Alcance y arquitectura definidos; no listo para uso. |
-| En construcción | Artefactos en desarrollo; no hay evidencia completa de ejecución. |
-| En validación | Flujo desplegado y bajo pruebas funcionales, de calidad y operación. |
-| Completado | Laboratorio reproducible con documentación y evidencia mínima. |
-| En endurecimiento | Funcional, pero requiere cerrar controles de seguridad, portabilidad o gobierno antes de usarse como referencia empresarial. |
+| Reproducibility | Fabric artifacts are stored as versionable code and configuration. |
+| Layered architecture | Raw, standardized, and consumption data are separated through Bronze, Silver, and Gold layers. |
+| Quality and traceability | Data contracts, validation evidence, and execution traceability are part of delivery. |
+| Governance by design | Naming, documentation, security, and semantic modeling are addressed from the beginning. |
+| Business value | Every project must answer a clear analytical or operational question. |
+| Progressive maturity | Projects start as working labs and evolve through controlled hardening. |
 
-## Estándar de gobierno
+## Project catalog
 
-Cada proyecto debe cumplir estos controles para figurar en el catálogo como una referencia reutilizable:
+| Project | Status | Scope | Branch |
+|---|---|---|---|
+| Wind Turbine Power Analysis | In progress | Daily ingestion, Medallion Lakehouse, semantic model, and wind-generation analytics. | [Open project](../../tree/project/wind_turbine_power_analysis) |
+| Smart Device Analytics | Hardening | Smart-device catalog ingestion, standardization, Warehouse, semantic model, and executive reporting. | [Open project](../../tree/project/SmartDeviceAnaliticsWS) |
 
-| Control | Mínimo exigible |
+### Maturity status
+
+| Status | Meaning |
 |---|---|
-| Documentación | README con objetivo, arquitectura, inventario, prerrequisitos, despliegue y operación. |
-| Seguridad | Sin secretos, tokens, contraseñas, rutas privadas ni identificadores de entorno en el repositorio. Las credenciales se gestionan externamente. |
-| Portabilidad | Parámetros de workspace, Lakehouse, origen y destino separados de la lógica. |
-| Calidad | Contrato de datos y reglas de calidad trazables para entidades críticas. |
-| Operación | Orquestación identificada, manejo de errores, alertamiento y procedimiento de recuperación. |
-| Trazabilidad | Decisiones relevantes, cambios de esquema y evidencia de validación versionados junto al proyecto. |
-| Revisión | Cambios por Pull Request hacia `project/*`; actualizaciones del catálogo mediante Pull Request hacia `main`. |
+| Planned | The scope has been defined but no functional implementation is published. |
+| In progress | The project is being implemented or validated as a lab. |
+| Hardening | The functional solution exists; portability, security, data quality, and operational controls are being strengthened. |
+| Reference | The project meets the agreed governance and operational acceptance criteria. |
 
-## Ciclo de vida
+## Minimum governance baseline
 
-```mermaid
-flowchart LR
-    A[Diseño] --> B[Construcción]
-    B --> C[Validación]
-    C --> D[Completado]
-    D --> E[Referencia reutilizable]
-    C --> F[Endurecimiento]
-    F --> E
-```
+Before a project is labelled **Reference**, it must provide:
 
-Una actualización de un proyecto debe conservar su rama autocontenida y actualizar esta ficha cuando cambien el estado, alcance, riesgos, arquitectura o criterios de operación.
+- A project README in English describing its purpose, architecture, prerequisites, deployment, operations, and known risks.
+- No embedded secrets, passwords, environment-specific IDs, or non-portable OneLake paths in versioned artifacts.
+- A documented data contract, executable or evidenced data-quality checks, and a runbook.
+- Architecture decisions (ADRs) for material design choices.
+- A repeatable validation process, including secret scanning and artifact/static checks where applicable.
+- Pull-request-based changes to the project branch, with the catalog updated when project scope or status changes.
 
-## Convención de ramas
+## Branch model
 
 ```text
-main                              # Catálogo, estándares y documentación transversal
-project/<nombre-del-proyecto>     # Artefactos y documentación autocontenidos
-feature/<proyecto>-<capacidad>    # Evolución puntual
-fix/<proyecto>-<incidencia>       # Corrección puntual
+main                              # Living catalog, common standards, and portfolio documentation
+project/<project-name>            # Self-contained project implementation
+feature/<project>-<capability>    # Scoped project enhancement
+fix/<project>-<issue>             # Scoped corrective change
 ```
 
-## Cómo usar el repositorio
+Changes are reviewed into their `project/...` branch. `main` is updated only for cross-cutting standards, catalog entries, or project maturity changes.
 
-1. Selecciona un proyecto en el catálogo y revisa su README específico.
-2. Clona la rama del proyecto que vayas a ejecutar.
-3. Configura los parámetros de tu entorno de Fabric sin incorporar secretos al código.
-4. Despliega, ejecuta las validaciones y documenta cualquier desviación o decisión.
-5. Propón mejoras mediante Pull Request a la rama correspondiente.
+## How to use this repository
 
-```bash
-git clone --branch project/SmartDeviceAnaliticsWS \
-  https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training.git
-```
+1. Use this catalog to identify a project and its maturity status.
+2. Open the project branch and read its README before deploying artifacts.
+3. Clone the selected branch, for example:
 
-## Tecnologías
+   ```bash
+   git clone --branch project/SmartDeviceAnaliticsWS \
+     https://github.com/oscargbocanegra/Fabric_MIcrosoft_Projects_Training.git
+   ```
 
-Microsoft Fabric · OneLake · Lakehouse · Warehouse · Notebooks Python · SQL · Data Pipelines · Dataflows Gen2 · Power BI · Modelos semánticos · Arquitectura Medallion · Data Quality · Automatización · IA Generativa
+4. Deploy or synchronize artifacts to an authorized Microsoft Fabric workspace.
+5. Record design decisions, validation evidence, and operating changes with the project.
 
-## Alcance
+## Technology scope
 
-Repositorio de aprendizaje y referencia técnica. La adopción productiva requiere completar los controles de seguridad, gobierno, observabilidad y despliegue propios de cada organización.
+Microsoft Fabric · OneLake · Lakehouse · Python Notebooks · SQL · Data Pipelines · Dataflows Gen2 · Warehouse · Power BI · Semantic Models · Medallion Architecture · Data Quality · Automation · Generative AI
+
+## Scope statement
+
+This is a learning and technical experimentation repository. Projects prioritize reusable engineering patterns, governance practices, and verifiable evidence before enterprise adoption.
