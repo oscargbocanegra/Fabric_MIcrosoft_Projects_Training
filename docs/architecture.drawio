@@ -1,0 +1,26 @@
+<mxfile host="app.diagrams.net" modified="2026-07-27T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="smart-device-flow" name="Smart Device Analytics">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="source" value="Source files&#xa;9 entities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#2874A6;fontStyle=1" vertex="1" parent="1"><mxGeometry x="40" y="180" width="170" height="70" as="geometry"/></mxCell>
+        <mxCell id="ingest" value="Copy Job +&#xa;ingestion notebooks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#148F77" vertex="1" parent="1"><mxGeometry x="270" y="180" width="180" height="70" as="geometry"/></mxCell>
+        <mxCell id="bronze" value="Bronze Lakehouse&#xa;raw + load metadata" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDEBD0;strokeColor=#CA6F1E;fontStyle=1" vertex="1" parent="1"><mxGeometry x="510" y="180" width="180" height="70" as="geometry"/></mxCell>
+        <mxCell id="silver" value="Silver Lakehouse&#xa;standardized entities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2F4F4;strokeColor=#7B7D7D;fontStyle=1" vertex="1" parent="1"><mxGeometry x="750" y="180" width="180" height="70" as="geometry"/></mxCell>
+        <mxCell id="gold" value="Gold Lakehouse&#xa;analytical model" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCF3CF;strokeColor=#B7950B;fontStyle=1" vertex="1" parent="1"><mxGeometry x="990" y="180" width="180" height="70" as="geometry"/></mxCell>
+        <mxCell id="consumption" value="Warehouse → Semantic model → Report&#xa;13 versioned visuals" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8DAEF;strokeColor=#7D3C98;fontStyle=1" vertex="1" parent="1"><mxGeometry x="1230" y="180" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="orchestration" value="5 Data Pipelines&#xa;orchestrate stages" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FADBD8;strokeColor=#C0392B" vertex="1" parent="1"><mxGeometry x="620" y="350" width="220" height="70" as="geometry"/></mxCell>
+        <mxCell id="dq" value="DQ evidence&#xa;contract + rule IDs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5F5E3;strokeColor=#239B56" vertex="1" parent="1"><mxGeometry x="860" y="350" width="220" height="70" as="geometry"/></mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" edge="1" parent="1" source="source" target="ingest"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" edge="1" parent="1" source="ingest" target="bronze"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" edge="1" parent="1" source="bronze" target="silver"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" edge="1" parent="1" source="silver" target="gold"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block" edge="1" parent="1" source="gold" target="consumption"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="controls" style="dashed=1;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none" edge="1" parent="1" source="orchestration" target="bronze"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="validates" style="dashed=1;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none" edge="1" parent="1" source="dq" target="silver"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="validates" style="dashed=1;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none" edge="1" parent="1" source="dq" target="gold"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
