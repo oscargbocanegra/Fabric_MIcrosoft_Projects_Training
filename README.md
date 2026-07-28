@@ -77,9 +77,13 @@ Notebooks in the `includes`, `ingestion`, and `transformation` folders must pres
 
 Validation evidence must accompany material changes before the project is declared reusable as a reference.
 
+The operational contract is versioned in [`docs/data-contract.md`](docs/data-contract.md), and the rule catalogue is in [`docs/dq-rules.md`](docs/dq-rules.md).
+
 ## Operations
 
 For a failure, identify the affected pipeline and activity, retain the execution identifier, and inspect the preceding layer before retrying. Do not rerun loads without confirming idempotency, duplicate handling, and the target-table state. Alerts must carry operational context only and no sensitive data.
+
+Use the [deployment guide](docs/deployment-guide.md) for environment setup and the [operations runbook](docs/runbook.md) for execution, retry, recovery, escalation, RPO, and RTO targets. Material design choices are recorded in [`docs/adr/`](docs/adr/).
 
 ## Status and known risks
 
@@ -87,7 +91,29 @@ The project is functional as a lab and is currently in **hardening** before it c
 
 - Environment-dependent values (workspace, Lakehouse, OneLake paths, and connections) must be externalized.
 - Error notification must use a secure mechanism; passwords and secrets are prohibited in notebooks, pipelines, and versioned configuration files.
-- Data contracts, executable DQ rules, a runbook, ADRs, and automated CI validation still need to be formalized.
+- Data contracts, DQ rule identifiers, a runbook, deployment guidance, and initial ADRs are formalized under `docs/`; executable checks, evidence automation, environment parameterization, and CI validation remain hardening work.
+- Historical naming is retained to avoid breaking existing references; corrections must be planned as a controlled migration.
+
+## Governance and contribution
+
+Changes are integrated through Pull Requests to `project/SmartDeviceAnaliticsWS`. Update this README whenever a change affects architecture, inventory, dependencies, security, data quality, or operations. Refer to the [governed catalog and common standards](../../blob/main/README.md) before contributing.
+
+=======
+The operational contract is versioned in [`docs/data-contract.md`](docs/data-contract.md), and the rule catalogue is in [`docs/dq-rules.md`](docs/dq-rules.md).
+
+## Operations
+
+For a failure, identify the affected pipeline and activity, retain the execution identifier, and inspect the preceding layer before retrying. Do not rerun loads without confirming idempotency, duplicate handling, and the target-table state. Alerts must carry operational context only and no sensitive data.
+
+Use the [deployment guide](docs/deployment-guide.md) for environment setup and the [operations runbook](docs/runbook.md) for execution, retry, recovery, escalation, RPO, and RTO targets. Material design choices are recorded in [`docs/adr/`](docs/adr/).
+
+## Status and known risks
+
+The project is functional as a lab and is currently in **hardening** before it can be recommended as an enterprise reference.
+
+- Environment-dependent values (workspace, Lakehouse, OneLake paths, and connections) must be externalized.
+- Error notification must use a secure mechanism; passwords and secrets are prohibited in notebooks, pipelines, and versioned configuration files.
+- Data contracts, DQ rule identifiers, a runbook, deployment guidance, and initial ADRs are formalized under `docs/`; executable checks, evidence automation, environment parameterization, and CI validation remain hardening work.
 - Historical naming is retained to avoid breaking existing references; corrections must be planned as a controlled migration.
 
 ## Governance and contribution
